@@ -1,26 +1,65 @@
+* {
+  box-sizing: border-box;
+}
 body {
-  font-family: -apple-system, sans-serif;
+  background: #f4f4f4;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f5f5f5;
 }
-
-header {
-  background: #007aff;
-  color: white;
-  padding: 50px;
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 32px 24px 24px 24px;
   text-align: center;
 }
-
-a {
-  background: white;
-  color: #007aff;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 4px;
+h1 {
+  margin-bottom: 24px;
 }
-
-section {
-  padding: 40px;
-  text-align: center;
+#description {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+#generate-btn {
+  padding: 12px 32px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+#generate-btn:hover {
+  background: #0056b3;
+}
+#loading {
+  margin: 16px 0;
+  color: #555;
+  font-style: italic;
+}
+#result {
+  margin-top: 20px;
+}
+#meme-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-top: 10px;
+  object-fit: contain;
 }

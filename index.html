@@ -1,24 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Landing Page</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meme Generator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Welcome to My App</h1>
-    <p>Start building amazing things with Swift and Web.</p>
-    <a href="#features">See Features</a>
-  </header>
-  <section id="features">
-    <h2>Features</h2>
-    <ul>
-      <li>Fast</li>
-      <li>Responsive</li>
-      <li>Beautiful</li>
-    </ul>
-  </section>
+  <div class="container">
+    <h1>Meme Generator</h1>
+    <textarea id="description" placeholder="Describe your meme idea here... (e.g., 'A cat sitting at a computer looking confused', 'A dog wearing sunglasses saying cool things', 'A person trying to fix something but making it worse')" rows="8"></textarea>
+    <input id="caption" type="text" placeholder="Enter meme caption (top text)" style="width:100%;margin-bottom:12px;font-size:1.1em;padding:8px;border-radius:6px;border:1px solid #ccc;" />
+    <button id="generate-btn">Generate</button>
+    <div id="loading" style="display:none;">Generating meme...</div>
+    <div id="result">
+      <div id="meme-container" style="position:relative;display:inline-block;width:100%;">
+        <img id="meme-image" src="" alt="Generated Meme" style="display:none;"/>
+        <div id="meme-caption" style="display:none;position:absolute;top:16px;left:50%;transform:translateX(-50%);width:90%;text-align:center;font-size:2em;font-weight:bold;color:white;text-shadow:2px 2px 0 #000, -2px 2px 0 #000, 2px -2px 0 #000, -2px -2px 0 #000;pointer-events:none;"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const btn = document.getElementById('generate-btn');
+    const desc = document.getElementById('description');
+    const img = document.getElementById('meme-image');
+    const loading = document.getElementById('loading');
+    const captionInput = document.getElementById('caption');
+    const memeCaption = document.getElementById('meme-caption');
+    btn.onclick = async () => {
+      const description = desc.value.trim();
+      const caption = captionInput.value.trim();
+      if (!description) {
+        alert('Please enter a meme description.');
+        return;
+      }
+      img.style.display = 'none';
+      memeCaption.style.display = 'none';
+      loading.style.display = 'block';
+      try {
+        const res = await fetch('http://localhost:3000/generate-meme', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ description })
+        });
+        const data = await res.json();
+        if (data.imageUrl) {
+          img.src = data.imageUrl;
+          img.style.display = 'block';
+          if (caption) {
+            memeCaption.textContent = caption;
+            memeCaption.style.display = 'block';
+          }
+        } else {
+          alert(data.error || 'Failed to generate meme.');
+        }
+      } catch (e) {
+        alert('Error connecting to backend.');
+      } finally {
+        loading.style.display = 'none';
+      }
+    };
+  </script>
 </body>
 </html>
